@@ -10,7 +10,7 @@
 <%@taglib uri="http://example.com/functions" prefix="f" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Meals</title>
     <style>
         .letters_true {
             color: red;
@@ -24,18 +24,32 @@
 <body>
 <h3><a href="index.html">Home</a></h3>
 <h2>Meals</h2>
+
+<p><a href="meals?action=create">Add Meal</a></p>
+
 <table border="1">
-    <c:forEach var="meal" items="${list}">
+    <tr>
+        <td>Date</td>
+        <td>Description</td>
+        <td>Calories</td>
+    </tr>
+    <c:forEach var="meal" items="${meals}">
         <c:if test="${meal.excess eq true}">
             <tr class="letters_true">
                 <td>
-                        ${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy')}
+                        ${f:formatLocalDateTime(meal.dateTime, 'dd-MM-yyyy HH:mm')}
                 </td>
                 <td>
                     <c:out value="${meal.description}"/>
                 </td>
                 <td>
                     <c:out value="${meal.calories}"/>
+                </td>
+                <td>
+                    <a href="meals?action=edit&mealId=<c:out value="${meal.id}"/>">Update</a>
+                </td>
+                <td>
+                    <a href="meals?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a>
                 </td>
             </tr>
         </c:if>
@@ -49,6 +63,12 @@
                 </td>
                 <td>
                     <c:out value="${meal.calories}"/>
+                </td>
+                <td>
+                    <a href="meals?action=edit&mealId=<c:out value="${meal.id}"/>">Update</a>
+                </td>
+                <td>
+                    <a href="meals?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a>
                 </td>
             </tr>
         </c:if>
