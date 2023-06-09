@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ru.javawebinar.topjava.util.TimeUtil" %><%--
   Created by IntelliJ IDEA.
   User: sulfu
   Date: 04.06.2023
@@ -25,11 +25,21 @@
 <h3><a href="index.html">Home</a></h3>
 <h2>Meals</h2>
 <table border="1">
+    <thead>
+        <tr>
+            <td>Date</td>
+            <td>Description</td>
+            <td>Calories</td>
+        </tr>
+    </thead>
     <c:forEach var="meal" items="${list}">
-        <c:if test="${meal.excess eq true}">
-            <tr class="letters_true">
+        <%-- Добавляем в jsp указание на бин MealTo --%>
+        <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealTo"/>
+        <%-- Используем тернарный оператор вместо дублирования кода с if-else --%>
+            <tr class="${meal.excess ? 'letters_true' : 'letters_false'}">
                 <td>
-                        ${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy')}
+                    <%-- Вызываем toString(), который отображает нашу дату согласно шаблону --%>
+                    <%=TimeUtil.toString(meal.getDateTime())%>
                 </td>
                 <td>
                     <c:out value="${meal.description}"/>
@@ -38,20 +48,6 @@
                     <c:out value="${meal.calories}"/>
                 </td>
             </tr>
-        </c:if>
-        <c:if test="${meal.excess eq false}">
-            <tr class="letters_false">
-                <td>
-                        ${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy')}
-                </td>
-                <td>
-                    <c:out value="${meal.description}"/>
-                </td>
-                <td>
-                    <c:out value="${meal.calories}"/>
-                </td>
-            </tr>
-        </c:if>
     </c:forEach>
 </table>
 </body>
