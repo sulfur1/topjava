@@ -23,7 +23,9 @@
 <h2>Edit</h2>
 
 <body>
-    <form method="POST" action='meals?mealId=<c:out value="${meal.id}"/>' name="frmEditMeal">
+    <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
+    <form method="POST" action="meals" name="frmEditMeal">
+        <input type="hidden" name="mealId" value="${meal.id}">
 
         DateTime: <input id="datetimepicker"
             type="text" name="dateTime"
