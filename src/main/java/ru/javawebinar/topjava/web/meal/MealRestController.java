@@ -38,11 +38,14 @@ public class MealRestController {
 
         if (startDate == null) {
             startDate = LocalDate.MIN;
-        } else if (endDate == null) {
+        }
+        if (endDate == null) {
             endDate = LocalDate.MAX;
-        } else if (startTime == null) {
+        }
+        if (startTime == null) {
             startTime = LocalTime.MIN;
-        } else {
+        }
+        if (endTime == null) {
             endTime = LocalTime.MAX;
         }
 

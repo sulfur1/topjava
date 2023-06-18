@@ -1,14 +1,32 @@
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Java Enterprise (Topjava)</title>
 </head>
+<style>
+    button {
+        background: none;
+        outline: none;
+        border: none;
+        text-transform: uppercase;
+    }
+</style>
 <body>
 <h3>Проект <a href="https://github.com/JavaWebinar/topjava" target="_blank">Java Enterprise (Topjava)</a></h3>
 <hr>
+<form method="post" action="index">
+    <select name="role" size="3">
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+    </select>
+    <br>
+    <ul style="font-size: large">
+    <button type="submit">Meals</button>
+    </ul>
+</form>
 <ul style="font-size: large">
-    <li><a href="users">Users</a></li>
-    <li><a href="meals">Meals</a></li>
+    <li><a type="submit">Users</a></li>
 </ul>
 </body>
 </html>

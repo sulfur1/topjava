@@ -56,11 +56,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Collection<Meal> getAll(int userId) {
-        List<Meal> listMeals = new ArrayList<>(repository.get(userId).values());
-
-        if (listMeals.isEmpty()) return Collections.emptyList();
-
-        return listMeals.stream().sorted((m1, m2) -> m2.getDateTime().compareTo(m1.getDateTime())).collect(Collectors.toList());
+        return getAllByFilteredDate(userId, LocalDate.MIN, LocalDate.MAX);
     }
 
     public List<Meal> getAllByFilteredDate(int userId, LocalDate startDate, LocalDate endDate) {
@@ -69,6 +65,7 @@ public class InMemoryMealRepository implements MealRepository {
                 ? Collections.emptyList()
                 : mealList.values().stream()
                 .filter(meal -> meal.getDate().compareTo(startDate) >= 0 && meal.getDate().compareTo(endDate) <= 0)
+                .sorted((m1, m2) -> m2.getDateTime().compareTo(m1.getDateTime()))
                 .collect(Collectors.toList());
     }
 }

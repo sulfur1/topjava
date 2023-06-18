@@ -7,6 +7,16 @@
     <display-name>TopJava</display-name>
 
     <servlet>
+        <servlet-name>indexServlet</servlet-name>
+        <servlet-class>ru.javawebinar.topjava.web.IndexServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>indexServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.UserServlet</servlet-class>
         <load-on-startup>0</load-on-startup>

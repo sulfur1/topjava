@@ -5,8 +5,11 @@
 <%--<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>--%>
 <html>
 <head>
-    <title>Meal list</title>
+    <title>Моя еда</title>
+
     <style>
+        <%@include file="/WEB-INF/css/style.css"%>
+
         .normal {
             color: green;
         }
@@ -20,10 +23,42 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <hr/>
-    <h2>Meals</h2>
+    <h2>Моя еда</h2>
+    <br><br>
+    <div class="card border-dark">
+        <div class="card-body pb-0">
+            <form method="post" action="meals">
+                <input type="hidden" name="id" value="filter">
+                <div class="row">
+                    <div class="col-2">
+                        <label for="startDate">От даты (включая)</label>
+                        <input type="date" class="form-control" name="startDate" id="startDate" autocomplete="off">
+                    </div>
+                    <div class="col-2">
+                        <label for="endDate">До даты (включая)</label>
+                        <input type="date" class="form-control" name="endDate" id="endDate" autocomplete="off">
+                    </div>
+                    <div class="offset-2 col-3">
+                        <label for="startTime">От времени (включая)</label>
+                        <input type="time" class="form-control" name="startTime" id="startTime" autocomplete="off">
+                    </div>
+                    <div class="col-3">
+                        <label for="endTime">До времени (исключая)</label>
+                        <input type="time" class="form-control" name="endTime" id="endTime" autocomplete="off">
+                    </div>
+                </div>
+                <button class="btn" type="submit">
+                    <span class="fa fa-filter"></span>
+                    Отфильтровать
+                </button>
+            </form>
+        </div>
+    </div>
+    <br/>
+    <br><br>
     <a href="meals?action=create">Add Meal</a>
     <br><br>
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table align="center" border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>
             <th>Date</th>
