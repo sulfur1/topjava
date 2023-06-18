@@ -16,6 +16,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.function.Predicate;
 
+import static ru.javawebinar.topjava.util.ValidationUtil.assureIdConsistent;
+
 @Controller
 public class MealRestController {
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -68,6 +70,7 @@ public class MealRestController {
 
     public void update(int id, Meal meal) {
         log.info("update {}", meal);
+        assureIdConsistent(meal, id);
         service.update(SecurityUtil.authUserId(), meal);
     }
 
