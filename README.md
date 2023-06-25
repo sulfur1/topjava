@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5dc72102fe964faebb9547a50f769356)](https://app.codacy.com/gh/sulfur1/topjava?utm_source=github.com&utm_medium=referral&utm_content=sulfur1/topjava&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/abe383d8d50d41a2ba1bd350ead597cb)](https://app.codacy.com/gh/sulfur1/topjava/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 Java Enterprise Online Project 
