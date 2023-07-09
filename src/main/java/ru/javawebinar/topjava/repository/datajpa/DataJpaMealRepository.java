@@ -16,40 +16,49 @@ public class DataJpaMealRepository implements MealRepository {
 
     @PersistenceContext
     private EntityManager em;
-    private final CrudMealRepository crudRepository;
+    private final CrudMealRepository crudMealRepository;
+    private final CrudUserRepository crudUserRepository;
 
-    public DataJpaMealRepository(CrudMealRepository crudRepository) {
-        this.crudRepository = crudRepository;
+    public DataJpaMealRepository(CrudMealRepository crudRepository, CrudUserRepository crudUserRepository) {
+        this.crudMealRepository = crudRepository;
+        this.crudUserRepository = crudUserRepository;
     }
 
     @Override
     @Transactional
     public Meal save(Meal meal, int userId) {
-        meal.setUser(em.getReference(User.class, userId));
-        if (meal.isNew()) {
-            return crudRepository.save(meal);
+        if (!meal.isNew() && get(meal.getId(), userId).getId() == null) {
+            return null;
         }
+        meal.setUser(crudUserRepository.getOne(userId));
 
-        return get(meal.id(), userId) == null ? null : crudRepository.save(meal);
+        return crudMealRepository.save(meal);
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return crudRepository.delete(id, userId) != 0;
+        return crudMealRepository.delete(id, userId) != 0;
     }
 
     @Override
     public Meal get(int id, int userId) {
-        return crudRepository.findMealById(id, userId).orElse(null);
+        return crudMealRepository.findById(id)
+                .filter(meal -> meal.getUser().getId() == userId)
+                .orElse(null);
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return crudRepository.findAllMealByUserId(userId);
+        return crudMealRepository.findAllMealByUserId(userId);
     }
 
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        return crudRepository.findAllMealBetweenHalfOpen(startDateTime, endDateTime, userId);
+        return crudMealRepository.findAllMealBetweenHalfOpen(startDateTime, endDateTime, userId);
+    }
+
+    @Override
+    public Meal getWithUser(Integer id, Integer userId) {
+        return crudMealRepository.getWithUser(id, userId);
     }
 }
