@@ -61,7 +61,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Test
     public void duplicateMailCreate() {
         assertThrows(DataAccessException.class, () ->
-                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.USER)));
+                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.USER, Role.ADMIN)));
     }
 
     @Test
@@ -102,7 +102,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Test
     public void getAll() {
         List<User> all = service.getAll();
-        USER_MATCHER.assertMatch(all, admin, guest, user);
+        USER_MATCHER.assertMatch(all, admin, user, guest);
     }
 
     @Test
