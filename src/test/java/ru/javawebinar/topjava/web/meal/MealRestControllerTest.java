@@ -79,7 +79,7 @@ class MealRestControllerTest extends AbstractControllerTest {
         List<Meal> filterDate = mealService.getBetweenInclusive(LocalDate.of(2020, 1, 30), LocalDate.of(2020, 1, 30), USER_ID);
         List<MealTo> mealToList = MealsUtil.getFilteredTos(filterDate, SecurityUtil.authUserCaloriesPerDay(), LocalTime.of(10, 0), LocalTime.of(20, 0));
 
-        perform(MockMvcRequestBuilders.get(REST_URL_MEALS + "/filter?startDateTime=" + startDateTime + "&endDateTime=" + endDateTime))
+        perform(MockMvcRequestBuilders.get(REST_URL_MEALS + "/filter?startDate=" + startDate+ "&endDate=" + endDate + "&startTime=" + startTime + "&endTime=" + endTime))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

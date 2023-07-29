@@ -29,8 +29,10 @@ public class MealTestData {
     public static final Meal adminMeal1 = new Meal(ADMIN_MEAL_ID, of(2020, Month.JANUARY, 31, 14, 0), "Админ ланч", 510);
     public static final Meal adminMeal2 = new Meal(ADMIN_MEAL_ID + 1, of(2020, Month.JANUARY, 31, 21, 0), "Админ ужин", 1500);
 
-    public static final String startDateTime = "2020-01-30T10:00:00";
-    public static final String endDateTime = "2020-01-30T20:00:00";
+    public static final String startDate = "2020-01-30";
+    public static final String endDate= "2020-01-30";
+    public static final String startTime = "10:00:00";
+    public static final String endTime = "20:00:00";
     public static final List<Meal> meals = List.of(meal7, meal6, meal5, meal4, meal3, meal2, meal1);
 
     public static final List<MealTo> mealsTo = MealsUtil.getTos(meals, SecurityUtil.authUserCaloriesPerDay());
