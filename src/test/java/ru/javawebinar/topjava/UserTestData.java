@@ -3,9 +3,13 @@ package ru.javawebinar.topjava;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
+import static ru.javawebinar.topjava.MealTestData.meals;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
@@ -24,6 +28,16 @@ public class UserTestData {
         return new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.USER));
     }
 
+    public static User getUserWithMeals() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        User userWithMeals = new User(user);
+        Class<? extends User> clazz = userWithMeals.getClass();
+        Method methodSetMeals = clazz.getDeclaredMethod("setMeals", List.class);
+
+        methodSetMeals.setAccessible(true);
+        methodSetMeals.invoke(userWithMeals, meals);
+
+        return userWithMeals;
+    }
     public static User getUpdated() {
         User updated = new User(user);
         updated.setEmail("update@gmail.com");

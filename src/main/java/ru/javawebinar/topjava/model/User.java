@@ -148,6 +148,7 @@ public class User extends AbstractNamedEntity {
         return meals;
     }
 
+    private void setMeals(List<Meal> meals) {this.meals = meals;}
     @Override
     public String toString() {
         return "User{" +
