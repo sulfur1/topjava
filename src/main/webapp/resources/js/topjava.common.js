@@ -1,13 +1,16 @@
-let form;
+let form, context;
 
-function makeEditable(datatableApi) {
-    ctx.datatableApi = datatableApi;
+
+function makeEditable(ctx) {
+    context = ctx;
     form = $('#detailsForm');
+    filter = $('#filter');
     $(".delete").click(function () {
         if (confirm('Are you sure?')) {
             deleteRow($(this).closest('tr').attr("id"));
         }
     });
+
 
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
@@ -21,31 +24,48 @@ function add() {
     form.find(":input").val("");
     $("#editRow").modal();
 }
+function updateRowMeal(id) {
+    $.get((context.ajaxUrl + id), function (data) {
+        form.find("input#id").val(data.id);
+        form.find("input#dateTime").val(data.dateTime);
+        form.find("input#description").val(data.description);
+        form.find("input#calories").val(data.calories);
+        $("#editRow").modal();
+    }, "json");
+}
 
 function deleteRow(id) {
     $.ajax({
-        url: ctx.ajaxUrl + id,
+        url: context.ajaxUrl + id,
         type: "DELETE"
     }).done(function () {
-        updateTable();
+        context.updateTable();
         successNoty("Deleted");
     });
 }
 
-function updateTable() {
-    $.get(ctx.ajaxUrl, function (data) {
-        ctx.datatableApi.clear().rows.add(data).draw();
-    });
+function updateTableByData(data) {
+    ctx.dataTableApi.clear().rows.add(data).draw();
 }
 
+function filter() {
+    $.ajax({
+        url: context.ajaxUrl + "filter",
+        type: "GET",
+        data: $('#filter').serialize()
+    }).done(function (data) {
+        updateTableByData(data);
+        successNoty("Filtered");
+    });
+}
 function save() {
     $.ajax({
         type: "POST",
-        url: ctx.ajaxUrl,
+        url: context.ajaxUrl,
         data: form.serialize()
     }).done(function () {
         $("#editRow").modal("hide");
-        updateTable();
+        context.updateTable();
         successNoty("Saved");
     });
 }
