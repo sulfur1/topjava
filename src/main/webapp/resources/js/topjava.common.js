@@ -45,10 +45,10 @@ function deleteRow(id) {
 }
 
 function updateTableByData(data) {
-    ctx.dataTableApi.clear().rows.add(data).draw();
+    context.dataTableApi.clear().rows.add(data).draw();
 }
 
-function filter() {
+function updateFilteredTable() {
     $.ajax({
         url: context.ajaxUrl + "filter",
         type: "GET",
@@ -57,6 +57,19 @@ function filter() {
         updateTableByData(data);
         successNoty("Filtered");
     });
+}
+function enable(checkbox, id) {
+    let enabled = checkbox.is(":checked");
+    $.ajax({
+        url: context.ajaxUrl + id,
+        type: "POST",
+        data: "enabled=" + enabled
+    }).done(function () {
+        checkbox.closest("tr").attr("data-userEnabled", enabled);
+        successNoty(enabled ? "Enabled" : "Disabled");
+    }).fail(function () {
+        $(checkbox).prop("checked", !enabled);
+    })
 }
 function save() {
     $.ajax({
@@ -69,7 +82,10 @@ function save() {
         successNoty("Saved");
     });
 }
-
+function clearFilter() {
+    $('#filter')[0].reset();
+    $.get("admin/meals/", updateTableByData)
+}
 let failedNote;
 
 function closeNoty() {
