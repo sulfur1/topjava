@@ -1,19 +1,25 @@
 package ru.javawebinar.topjava.to;
 
+import javax.validation.constraints.*;
 import java.beans.ConstructorProperties;
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MealTo extends BaseTo {
+    @NotNull
+    private LocalDateTime dateTime;
+    @NotBlank(message = "Description must not be empty")
+    private String description;
+    @NotNull
+    @Min(value = 1L, message = "field must have only positive values")
+    private int calories;
 
-    private final LocalDateTime dateTime;
+    @NotNull
+    private boolean excess;
 
-    private final String description;
-
-    private final int calories;
-
-    private final boolean excess;
-
+    public MealTo() {}
     @ConstructorProperties({"id", "dateTime", "description", "calories", "excess"})
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
         super(id);
@@ -37,6 +43,22 @@ public class MealTo extends BaseTo {
 
     public boolean isExcess() {
         return excess;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+    public void setExcess(boolean excess) {
+        this.excess = excess;
     }
 
     @Override
