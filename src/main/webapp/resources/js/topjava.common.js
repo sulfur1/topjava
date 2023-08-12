@@ -21,12 +21,36 @@ function add() {
 function updateRow(id) {
     form.find(":input").val("");
     $("#modalTitle").html(i18n["editTitle"]);
-    $.get(ctx.ajaxUrl + id, function (data) {
+    $.ajax({
+        url: ctx.ajaxUrl + id,
+        type: "GET",
+        dataType: "json myConversion",
+        /*contents: {
+            url: ctx.ajaxUrl + id,
+            mycustomtype: /mycustomtype/
+        },*/
+        converters: {
+            "text myConversion": true,
+            "myConversion json": function( result ) {
+                //console.log(result);
+                return result;
+            }
+        }
+    }).done(function (data) {
+        console.log(JSON.parse(data));
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
+        $('#dateTime').datetimepicker();
         $('#editRow').modal();
     });
+    /*$.get(ctx.ajaxUrl + id, function (data) {
+        $.each(data, function (key, value) {
+            form.find("input[name='" + key + "']").val(value);
+        });
+        $('#dateTime').datetimepicker();
+        $('#editRow').modal();
+    });*/
 }
 
 function deleteRow(id) {
